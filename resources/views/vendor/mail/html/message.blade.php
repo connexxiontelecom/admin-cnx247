@@ -3,7 +3,7 @@
 @slot('header')
 @component('mail::header', ['url' => config('app.url')])
 {{-- {{ config('app.name') }} --}}
-{{ Auth::user()->tenant->company_name }}
+{{ config('app.name') }}
 @endcomponent
 @endslot
 
@@ -23,7 +23,7 @@
 @slot('footer')
 @component('mail::footer')
 {{-- © {{ date('Y') }} {{ config('app.name') }}. @lang('All rights reserved.') --}}
-© {{ date('Y') }} {{ Auth::user()->tenant->company_name }}. @lang('All rights reserved.')
+© {{ date('Y') }} {{ config('app.name') }}. @lang('All rights reserved.')
 @endcomponent
 @endslot
 @endcomponent

@@ -60,12 +60,12 @@
                                     <div class="user-box assign-user taskboard-right-users">
                                         <div class="media">
                                             <div class="media-left media-middle photo-table">
-                                                <a href="{{route('view-profile', $conversation->user->url)}}">
-                                                    <img class="media-object img-radius" src="/assets/images/avatars/thumbnails/{{$conversation->user->avatar ?? 'avatar.png'}}" alt="{{$conversation->user->first_name}}">
+                                                <a href="javascript:void(0);">
+                                                    <img class="media-object img-radius" src="/assets/images/avatars/thumbnails/avatar.png'" alt="">
                                                 </a>
                                             </div>
                                             <div class="media-body">
-                                                <a href="{{route('view-profile', $conversation->user->url)}}">{{$conversation->user->first_name}} {{$conversation->user->surname ?? ''}}</a>
+                                                <a href="javascript:void(0);">Admin</a>
                                                 - <small>{{date('d F, Y', strtotime($conversation->created_at))}} @ {{date('h:ia', strtotime($conversation->created_at))}}</small>
                                             </div>
                                         </div>

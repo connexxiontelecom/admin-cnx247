@@ -94,32 +94,6 @@
                     @endif
                     </div>
                     <div class="row">
-                        <div class="col-xl-8">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5>Weekly Performance</h5>
-                                    <span>Pricing plan comparison for the week.</span>
-
-                                </div>
-                                <div class="card-block">
-                                    <div id="main" style="height:300px"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5>Tenants</h5>
-                                    <span>Top 5 Contributing tenants</span>
-
-                                </div>
-                                <div class="card-block">
-                                    <div id="pie-chart" style="height:300px"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="col-md-12 col-lg-12">
                             <div class="card">
                                 <div class="card-header">
@@ -128,20 +102,6 @@
                                 </div>
                                 <div class="card-block">
                                     <div id="placeholder" class="demo-placeholder" style="height:300px;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5>Revenue Chart</h5>
-                                    <span>Revenue comparison across different pricing plans.</span>
-
-                                </div>
-                                <div class="card-block">
-                                    <div id="morris-extra-area"></div>
                                 </div>
                             </div>
                         </div>

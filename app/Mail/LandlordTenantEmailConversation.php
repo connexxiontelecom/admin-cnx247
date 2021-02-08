@@ -33,7 +33,7 @@ class LandlordTenantEmailConversation extends Mailable
     public function build()
     {
         return $this->from('no-reply@cnx247.com',config('app.name'))
-        ->subject($this->subject)
+        ->subject(config('app.name').' - '.$this->conversation->subject)
         ->markdown('mails.tenant.landlordtenantemailconversation');
     }
 }

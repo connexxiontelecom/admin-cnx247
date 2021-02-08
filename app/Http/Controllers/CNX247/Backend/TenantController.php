@@ -196,6 +196,7 @@ class TenantController extends Controller
             'content'=>'required',
             'tenantId'=>'required'
         ]);
+
         $tenant = Tenant::where('tenant_id', $request->tenantId)->first();
         $conversation = new LandlordTenantConversation;
         $conversation->subject = $request->subject;
@@ -205,16 +206,17 @@ class TenantController extends Controller
         $conversation->slug = substr(sha1(time()), 11,40);
         $conversation->sender_id = Auth::user()->id;
         $conversation->save();
-        try{
+        //try{
             \Mail::to($tenant)->send(new LandlordTenantEmailConversation($conversation, $tenant));
             return response()->json(['message'=>'Success! Message sent.']);
-        }catch(\Exception $ex){
-
-        }
+        //}catch(\Exception $ex){
+           // return response()->json(['error'=>'Ooops! Something went wrong.']);
+        //}
     }
 
     public function viewConversation($slug){
         $conversation = LandlordTenantConversation::where('slug', $slug)->first();
+
         if(!empty($conversation) ){
             return view('backend.admin.tenants.view-tenant-landlord-conversation',
             ['conversation'=>$conversation
