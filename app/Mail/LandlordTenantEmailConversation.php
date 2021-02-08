@@ -7,19 +7,22 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\LandlordTenantConversation;
+use App\Tenant;
 
 class LandlordTenantEmailConversation extends Mailable
 {
     use Queueable, SerializesModels;
     public $conversation;
+    public $tenant;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(LandlordTenantConversation $conversation)
+    public function __construct(LandlordTenantConversation $conversation, Tenant $tenant)
     {
         $this->conversation = $conversation;
+        $this->tenant = $tenant;
     }
 
     /**

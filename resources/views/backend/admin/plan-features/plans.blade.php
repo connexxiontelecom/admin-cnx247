@@ -56,8 +56,8 @@
                                         @foreach ($plans as $plan)
                                             <tr>
                                                 <td>{{$i++}}</td>
-                                                <td>{{$plan->planName->name}}</td>
-                                                <td>{{$plan->duration}} <label for="" class="label label-primary"> days</label></td>
+                                                <td>{{$plan->planName->name ?? ''}}</td>
+                                                <td>{{$plan->duration ?? ''}} <label for="" class="label label-primary"> days</label></td>
                                                 <td>{{$plan->currency->symbol}}{{number_format($plan->price,2)}}</td>
                                                 <td>
                                                     <div class="btn-group">

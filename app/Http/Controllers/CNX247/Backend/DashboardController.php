@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CNX247\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Tenant;
 use Auth;
 
 class DashboardController extends Controller
@@ -17,6 +18,7 @@ class DashboardController extends Controller
     * Index page
     */
     public function index(){
-        return view('backend.admin.index');
+        $tenants = Tenant::orderBy('id', 'DESC')->get();
+        return view('backend.admin.index',['tenants'=>$tenants]);
     }
 }

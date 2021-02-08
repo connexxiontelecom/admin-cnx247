@@ -205,8 +205,12 @@ class TenantController extends Controller
         $conversation->slug = substr(sha1(time()), 11,40);
         $conversation->sender_id = Auth::user()->id;
         $conversation->save();
-        \Mail::to($tenant)->send(new LandlordTenantEmailConversation($conversation));
-        return response()->json(['message'=>'Success! Message sent.']);
+        try{
+            \Mail::to($tenant)->send(new LandlordTenantEmailConversation($conversation, $tenant));
+            return response()->json(['message'=>'Success! Message sent.']);
+        }catch(\Exception $ex){
+
+        }
     }
 
     public function viewConversation($slug){

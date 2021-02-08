@@ -116,7 +116,7 @@
 
         @include('partials.commons._top-navbar')
 
-        <div class="pcoded-main-container" id="pcoded-background" style="background: url('/assets/uploads/themes/{{Auth::user()->userTheme->theme}}'); background-size:cover; background-repeat: no-repeat;">
+        <div class="pcoded-main-container" id="pcoded-background" style="background-size:cover; background-repeat: no-repeat;">
             <div class="pcoded-wrapper">
 
                 @livewire('backend.partials.sidebar-menu')
@@ -173,61 +173,6 @@
 </div>
 
 @yield('dialog-section')
-<div class="modal fade" id="themeModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <h5 class="sub-title">Background Theme</h5>
-                @livewire('backend.themes.theme')
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <div class="btn-group ">
-                    <button type="button" class="btn btn-danger waves-effect btn-mini" data-dismiss="modal"><i class="ti-close text-white mr-2"></i> Close</button>
-                    <button type="button" class="btn btn-success waves-effect btn-mini waves-light" id="saveThemeChangesBtn"> <i class="ti-check text-white mr-2"></i> Save Changes</button>
-                </div>
-                <button type="button" class="btn btn-secondary waves-effect btn-mini waves-light float-right" data-toggle="modal" data-target="#customModal" id="custome"> <i class="ti-user text-white mr-2"></i> Custom Theme</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="customModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-12 col-sm-12">
-                        <div class="card">
-                            <div class="card-block" style="background: #EEF2F4;">
-                                <h6 class="sub-title">Use Your Own Theme</h6>
-                                <form id="customeThemeForm" data-parsley-validate>
-                                    <div class="form-group">
-                                        <label for="">Background Image</label> <br>
-                                        <img src="/assets/uploads/themes/{{Auth::user()->userTheme->theme ?? ''}}" class="mb-2" height="48" width="48" alt="">
-                                        <input type="file" required name="custom_background_image" id="custom_background_image" class="form-control-file">
-                                    </div>
-                                    <div class="checkbox-fade fade-in-primary">
-                                        <label>
-                                            <input type="checkbox"  name="custom_color_scheme" id="custom_color_scheme">
-                                            <span class="cr">
-                                                <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
-                                            </span>
-                                            <span>Dark Color Scheme</span>
-                                        </label>
-                                    </div>
-                                    <p><strong class="text-danger">Note:</strong> The default color scheme is light.</p>
-                                    <div class="btn-group d-flex justify-content-center">
-                                        <button type="button" class="btn btn-danger waves-effect btn-mini" data-dismiss="modal"><i class="ti-close text-white mr-2"></i> Close</button>
-                                        <button type="submit" class="btn btn-success waves-effect btn-mini waves-light" id="customBackgroundBtn"> <i class="ti-check text-white mr-2"></i> Use Mine</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <script type="text/javascript" src="/assets/bower_components/jquery/js/jquery.min.js"></script>
 <script type="text/javascript" src="/assets/bower_components/jquery-ui/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/assets/bower_components/popper.js/js/popper.min.js"></script>
@@ -260,100 +205,7 @@
 @stack('dialer-script')
 <script src="{{asset('/assets/js/cus/twilio.min.js')}}"></script>
 <script>
-    var theme = null;
-    var themeId = null;
-    var scheme = "{{ Auth::user()->userTheme->color_scheme }} !important";
-    var customTheme = null;
     $(document).ready(function(){
-        $('.pcoded-mtext').css("color",scheme);
-        $('.pcoded-navigatio-lavel').css("color",scheme);
-        $('input[name="backgroundTheme"]').click(function(){
-            if($(this).prop("checked") == true){
-                theme = $(this).data('background');
-                scheme = $(this).data('scheme');
-                themeId = $(this).val();
-                var location = "/assets/uploads/themes/"+theme;
-                $('#pcoded-background').css("background","url(" + location + ")");
-                $('#pcoded-background').css("background-size","cover");
-                $('#pcoded-background').css("background-repeat","no-repeat");
-                $('.pcoded-mtext').css("color",scheme);
-                $('.pcoded-navigatio-lavel').css("color",scheme);
-            }
-
-        });
-
-        $(document).on('click', '#saveThemeChangesBtn', function(e){
-            e.preventDefault();
-            if(theme == null){
-                $.notify("Ooops! You haven't chosen a theme.", "error");
-            }else{
-                $('#saveThemeChangesBtn').text("Processing...");
-                axios.post('/switch-theme',{theme:themeId})
-                .then(response=>{
-                    $('#themeModal').modal('hide');
-                    $.notify(response.data.message, "success");
-                    $('#saveThemeChangesBtn').text("Save changes");
-                })
-                .catch(error=>{
-                    $.notify("Ooops! Something went wrong. Try again", "error");
-                });
-            }
-        });
-        $(document).on('change', '#custom_background_image', function(e){
-            e.preventDefault();
-            var extension = $('#custom_background_image').val().split('.').pop().toLowerCase();
-            if ($.inArray(extension, ['jpeg', 'jpg', 'png', 'gif']) == -1) {
-                $.notify('Ooops! File format not supported.', 'error');
-                $('#custom_background_image').val('');
-            }else{
-                customTheme = $('#custom_background_image').prop('files')[0];
-
-            }
-        });
-        $('input[name="custom_color_scheme"]').click(function(){
-            if($(this).prop("checked") == true){
-                $('#custom_color_scheme').val(1);
-            }
-            else if($(this).prop("checked") == false){
-                $('#custom_color_scheme').val(0);
-            }
-        });
-        $('#customeThemeForm').parsley().on('field:validated', function() {
-
-        }).on('form:submit', function() {
-            var config = {
-                        onUploadProgress: function(progressEvent) {
-                        var percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total );
-                        }
-                };
-                var form_data = new FormData();
-                form_data.append('name',"Custom Background {{rand(0,999)}}.");
-                form_data.append('attachment',customTheme);
-                form_data.append('scheme',$('#custom_color_scheme').val());
-                form_data.append('custom','yes');
-                $('#customBackgroundBtn').text('Processing...');
-                 axios.post('/theme/gallery/upload',form_data, config)
-                .then(response=>{
-                    $.notify(response.data.message, 'success');
-                    $('#customBackgroundBtn').text('Done');
-                    setTimeout(function () {
-                        $("#customBackgroundBtn").text("Save");
-                        $('#custom_background_image').val('');
-                        $('#custom_text_color').val('');
-                        $('#backgroundThemeModal').modal('hide');
-                        location.reload();
-                    }, 2000);
-
-                })
-                .catch(error=>{
-                    $.notify('Error! Something went wrong.', 'error');
-                    $('#customBackgroundBtn').text("Ooops...We couldn't upload theme.");
-                    setTimeout(function () {
-                        $("#customBackgroundBtn").text("Save");
-                    }, 2000);
-                });
-            return false;
-        });
 
     });
 </script>

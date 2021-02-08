@@ -27,7 +27,7 @@ class Login extends Component
         if(!empty($user)){
             //this account is verified
             if(Auth::attempt(['email'=>$this->email, 'password'=>$this->password], $this->remember)){
-                    return redirect()->route('my-profile');
+                    return redirect()->route('dashboard');
             }else{
                 $this->error = session()->flash("wrongCredentials", "<strong>Error! </strong> Wrong or invalid login credentials. Try again.");
             }
