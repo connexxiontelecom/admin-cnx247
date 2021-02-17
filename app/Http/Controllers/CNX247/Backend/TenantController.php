@@ -146,6 +146,7 @@ class TenantController extends Controller
         $transaction = TransactionReference::where('tenant_id', $tenant->tenant_id)->first();
         $conversations = LandlordTenantConversation::where('tenant_id', $tenant->tenant_id)->get();
         if(!empty($tenant) ){
+            return dd($transaction);
             return view('backend.admin.tenants.view',
             ['tenant'=>$tenant,
             'transaction'=>$transaction,
